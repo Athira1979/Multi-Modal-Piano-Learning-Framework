@@ -12,11 +12,22 @@ End-to-end trainable with <100ms inference
 📊 Architecture Overview
 
 Copy code
-Audio (Wavelet+MFCC) → AudioEncoder → 128D
-Gesture → FDMMA (TCN+ATFM) → 128D  
-Posture → STABlock (PASA+PATA) → 16D
-       ↓ CrossModal Fusion (CMTPF)
-         128D → Classifier → [Beginner/Intermediate/Advanced]
+
+🏗️ Architecture Overview
+markdown
+
+Copy code
+```
+Audio (Wavelet+MFCC) ──→ AudioEncoder ──→ 128D
+         │
+Gesture ───────────────→ FDMMA (TCN+ATFM) ──→ 128D  
+         │
+Posture ───────────────→ STABlock (PASA+PATA) ──→ 16D
+         │
+         ↓ CrossModal Fusion (CMTPF)
+         │
+        128D ──→ Classifier ──→ [Beginner/Intermediate/Advanced]
+```
 🚀 Quick Start
 1. Install Dependencies
 bash
