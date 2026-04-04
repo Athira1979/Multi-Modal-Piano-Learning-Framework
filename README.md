@@ -1,5 +1,5 @@
 #  Spatiotemporal Attention and Cross-Modal Fusion Framework for Intelligent Piano Learning with Personalized Feedback Generation
-![License_ MIT](https://github.com/user-attachments/assets/f0fc5011-9ca9-485f-bfb6-1661708a0be5)![License_ MIT](https://github.com/Athira1979/Cross-Modal-Piano-Learning-Framework/blob/main/LICENSE)
+[![MIT License](https://github.com/user-attachments/assets/f0fc5011-9ca9-485f-bfb6-1661708a0be5)](https://raw.githubusercontent.com/Athira1979/Cross-Modal-Piano-Learning-Framework/refs/heads/main/LICENSE)
  
 A state-of-the-art multimodal deep learning system for automatic piano skill assessment using audio, gesture, and posture data. Achieves robust classification of beginner/intermediate/advanced skill levels.
 
