@@ -9,9 +9,32 @@ from tqdm import tqdm
 from evaluate import evaluate_model
 from model import PianoAIModel
 from utils.metrics import compute_metrics
+from utils.plot_metrics import plot_training_curves
 import matplotlib.pyplot as plt
 import os
 
+def validate(model, val_loader, criterion, device):
+    model.eval()
+    val_loss = 0
+    val_correct = 0
+    val_total = 0
+
+    with torch.no_grad():
+        for audio, hand, posture, label in val_loader:
+            audio, hand, posture, label = (
+                audio.to(device), hand.to(device),
+                posture.to(device), label.to(device)
+            )
+
+            output = model(audio, hand, posture)
+            loss = criterion(output, label)
+
+            val_loss += loss.item()
+            _, preds = torch.max(output, 1)
+            val_correct += (preds == label).sum().item()
+            val_total += label.size(0)
+
+    return val_loss / len(val_loader), val_correct / val_total
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -153,33 +176,10 @@ def main():
     print("\n📊 Final Metrics:")
     for k, v in metrics.items():
         print(f"   {k}: {v:.4f}")
+        
+    plot_training_curves(train_losses, val_losses, train_accs, val_accs) 
  
-
-def validate(model, val_loader, criterion, device):
-    model.eval()
-    val_loss = 0
-    val_correct = 0
-    val_total = 0
-
-    with torch.no_grad():
-        for audio, hand, posture, label in val_loader:
-            audio, hand, posture, label = (
-                audio.to(device), hand.to(device),
-                posture.to(device), label.to(device)
-            )
-
-            output = model(audio, hand, posture)
-            loss = criterion(output, label)
-
-            val_loss += loss.item()
-            _, preds = torch.max(output, 1)
-            val_correct += (preds == label).sum().item()
-            val_total += label.size(0)
-
-    return val_loss / len(val_loader), val_correct / val_total
-
  
-
 
 if __name__ == '__main__':
     main()
